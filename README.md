@@ -32,3 +32,209 @@ fonte: [Técnica de Teste — Particionamento de Equivalência](https://medium.c
   - `inpoints`: são todos os valores válidos. Ex: 18, 19, 20, 21 ... anos
   - `offpoints`: são todos os valores inválidos. Ex: 17, 16 ... 2 anos e etc 
 
+
+3 - Aprendendo sobre Structural Test
+- Structural Test ou Testes Estruturais são testes construídos guiados pelo código-fonte
+- Tem como responsabilidade garantir um critério de cobertura
+
+Exemplo de calculo de cobertura por  método:
+```
+Quantidade de métodos executados pelo teste: 1
+
+Quantidade métodos existentes na classe: 1
+
+(1/1) * 100 = 100%
+```
+
+- Tipos de testes de cobertura:
+  - Line Coverage (and statement coverage)
+  - Block coverage
+  - Branch/Decision coverage
+  - Condition (Basic and condition+branc) coverage
+  - Path coverage
+  - MC/DC coverage
+
+#### Line Coverage (Cobertura por Linhas)
+- o objetivo é cobrir as linhas de codigo de determinada unidade, ao executar um teste.
+
+Exemplo de calculo:
+```
+cobertura = (linhasExecutadasPorUmTeste/totalDeLinhas) * 100
+```
+
+- [ST1x_2018_Week_3_01_Structural_testing_line_coverage-video](https://www.youtube.com/watch?v=12P-UCRFanI&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
+
+#### Block Coverage (Cobertura por blocos)
+- visa a cobertura de código por blocos de códigos
+
+*Bloco básico*
+
+ São aqueles onde existem diversas operações que são executadas de maneira continua. Ex:
+ ```java
+public void somaDosQuadrados(int a, int b){ 
+    int quadradoDeA = a*a;
+    int quadradoDeB = b*b;
+    int soma = quadradoDeA + quadradoDeB;
+    System.out.println("Soma dos quadrados: "  + soma);
+}
+ ```
+
+*Bloco de decisão*
+
+São blocos de códigos que podem seguir caminhos diferentes quando utilizam estruturas de decisão como `if` e `else` ou de repetição como `while` e `for`. Ex:
+```java
+class Primo {
+
+    public boolean isPrimo(int numero) { 
+        int foiDividido = 0;
+
+        for (int i = 1; i <= numero; i++) {
+            if (numero % i == 0) {
+                foiDividido++;
+            }
+        }
+
+        if (foiDividido == 2) {
+            return true;
+        }
+        return false;
+    }
+
+}
+```
+Exemplos de testes:
+```java
+@Test
+@DisplayName("o número zero não deve ser primo")
+void test() {
+    NumeroPrimo numero = new NumeroPrimo();
+    assertFalse(numero.isPrimo(0));
+}
+
+@Test
+@DisplayName("o número 2 deve ser primo")
+void test1() {
+    NumeroPrimo numero = new NumeroPrimo();
+    assertTrue(numero.isPrimo(2));
+}
+
+@Test
+@DisplayName("o número 15 não deve ser primo")
+void test2() {
+    NumeroPrimo numero = new NumeroPrimo();
+    assertFalse(numero.isPrimo(15));
+}
+```
+
+- [ST1x_2018_Week_3_03_Branch_coverage-video
+](https://www.youtube.com/watch?v=u0UJn1FseKY&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
+
+### Cobertura condicional ((Basic) condition coverage)
+- Visa a cobertura de código baseada nas condicionais
+- Alguns casos onde as condicionais fazem mais de uma verificação é necessário verificar as demais ramificações (filiais ou caminhos)
+
+Exemplo de condicional simples:
+```java
+public boolean ehPositivo(int a){
+    if(a > -1 ){
+        return true;
+    }
+
+    return false;
+}
+```
+
+Exemplo de condicional complexa:
+```java
+public boolean crescente(int a, int b, int c){
+    if(a > b && b > c && c < a){
+        return true;
+    }
+
+    return false;
+}
+```
+
+Testes da condicional complexa:
+```java
+class CrescenteTest {
+    private Crescente numero;
+
+    @BeforeEach
+    void setUp() {
+        this.numero = new Crescente();
+    }
+
+    @Test
+    @DisplayName("a deve ser maior que b, e b maior que c, por fim c menor que a")
+    void test() {
+        assertTrue(this.numero.crescente(10, 8, 5));
+    }
+
+
+    @Test
+    @DisplayName("a deve ser menor que b, e b maior que c, por fim c maior que a")
+    void test1() {
+        assertFalse(this.numero.crescente(10, 20, 15));
+    }
+
+    @Test
+    @DisplayName("A deve ser maior que B")
+    void test2() {
+        assertTrue(this.numero.crescente(25, 20, 15));
+    }
+
+    @Test
+    @DisplayName("A deve ser menor que B")
+    void test3() {
+        assertFalse(this.numero.crescente(15, 20, 15));
+    }
+
+    @Test
+    @DisplayName("B deve ser maior que C")
+    void test4() {
+        assertTrue(this.numero.crescente(23, 22, 15));
+    }
+
+    @Test
+    @DisplayName("b deve ser menor que C")
+    void test5() {
+        assertFalse(this.numero.crescente(15, 20, 25));
+    }
+
+
+    @Test
+    @DisplayName("C deve ser menor que A")
+    void test6() {
+        assertTrue(this.numero.crescente(23, 22, 21));
+    }
+
+    @Test
+    @DisplayName("C deve ser maior que A")
+    void test7() {
+        assertFalse(this.numero.crescente(21, 20, 25));
+    }
+}
+
+```
+- [ST1x_2018_Week_3_04_Condition_coverage-video
+](https://www.youtube.com/watch?v=6FlpIG7h8TQ&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
+
+### Cobertura de Caminho (Path Coverage)
+
+- Visa criar testes apartir da combinação completa das condições de uma decisão
+- Cada combinação é um caminho que deve ser exercicitado por teste
+```
+cobertura de caminhos = (caminhos percorridos/total de caminhos) * 100
+
+caminhos percoridos= 2
+total de camimhos = 6
+
+cobertura de caminhos ->  (2/6) * 100 =  33,33%
+```
+
+### MC/DC - Condição Modificada/Cobertura de decisão (Modified Condition/Decision Coverage)
+
+- [MCDC](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/structural-test.md#mcdc---condi%C3%A7%C3%A3o-modificadacobertura-de-decis%C3%A3o-modified-conditiondecision-coverage)
+
+- [ST1x_2018_Week_3_06_MCDC-video](https://www.youtube.com/watch?v=bwtALQVx86w&t=5s&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
