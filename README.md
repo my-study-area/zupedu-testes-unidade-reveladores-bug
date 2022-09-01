@@ -238,3 +238,53 @@ cobertura de caminhos ->  (2/6) * 100 =  33,33%
 - [MCDC](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/structural-test.md#mcdc---condi%C3%A7%C3%A3o-modificadacobertura-de-decis%C3%A3o-modified-conditiondecision-coverage)
 
 - [ST1x_2018_Week_3_06_MCDC-video](https://www.youtube.com/watch?v=bwtALQVx86w&t=5s&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
+
+## Atividade obrigatórias
+
+### Testando a função que verifica se uma palavra é um Palindromo
+Existem certas palavras ou frases que quando lidas ao contrário representam a mesma coisa do que quando lidas na ordem convencional. Estas palavras são conhecidas como Palindromo, um belo exemplo de palindromo é a palavra `ovo`.
+
+Para exercitar sua habilidade de escrita de testes de unidade reveladores de Bug, seu objetivo nesta atividade é testar a classe Palindromo que esta descrita abaixo:
+```java
+public class Palindromo {
+
+    public boolean isPalindromo(String palavra) {
+        if (palavra == null || palavra.isBlank()) {
+            return false;
+        }
+
+        String palavraSemAcentosECaracteresEspeciais = Normalizer.normalize(palavra, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "")
+                .toLowerCase()
+                .replaceAll("[^a-z0-9]", "");
+
+        return isPalindromoRecursive(palavraSemAcentosECaracteresEspeciais, 0,palavraSemAcentosECaracteresEspeciais.length() - 1);
+    }
+
+
+    private boolean isPalindromoRecursive(String palavra, int indexDaPontaEsquerdaDoArray, int indexDaPontaDireitaDoArray) {
+        char[] letrasDaPalavra = palavra.toCharArray();
+        char letraAtualDaPontaEsquerda = letrasDaPalavra[indexDaPontaEsquerdaDoArray];
+        char letraAtualDaPontaDireita = letrasDaPalavra[indexDaPontaDireitaDoArray];
+
+        if (indexDaPontaDireitaDoArray > 0 && letraAtualDaPontaEsquerda == letraAtualDaPontaDireita) {
+            return isPalindromoRecursive(palavra, indexDaPontaEsquerdaDoArray + 1, indexDaPontaDireitaDoArray -1);
+        }
+
+        return letraAtualDaPontaEsquerda == letraAtualDaPontaDireita;
+
+}
+```
+Quais foram as técnicas que você utilizou para construir a suite de testes para funcionalidade do Palindromo?
+
+`R:` Utilizando a specification test para identificar os parâmetros de entrada com suas características e identificando as restrições como valores em branco e nulos. E Structutal Test utilizando a cobertura por bloco e a cobertural por condicional.
+
+Quantos testes compõem sua suíte de testes?
+
+`R:` Verificação de valor de entrada nulo ou em branco, palavras que são palíndromos com quantidadde par e ímpar de letras e palavras que não são palíndromos.
+
+Cole aqui o link do Gist desenvolvido relativo aos casos de testes gerados a partir das técnicas e também a implementação dos casos:
+
+`R:` [https://gist.github.com/adrianoavelinozup/00dc3da13a68298eb890af7658c56fed](https://gist.github.com/adrianoavelinozup/00dc3da13a68298eb890af7658c56fed)
+
+Resposta do especialista: [https://gist.github.com/jordisilvazup/1f0c7c8ebdd9320fb59a3f3e8f30d4db](https://gist.github.com/jordisilvazup/1f0c7c8ebdd9320fb59a3f3e8f30d4db)
