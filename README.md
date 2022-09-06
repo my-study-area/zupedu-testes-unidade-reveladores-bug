@@ -288,3 +288,105 @@ Cole aqui o link do Gist desenvolvido relativo aos casos de testes gerados a par
 `R:` [https://gist.github.com/adrianoavelinozup/00dc3da13a68298eb890af7658c56fed](https://gist.github.com/adrianoavelinozup/00dc3da13a68298eb890af7658c56fed)
 
 Resposta do especialista: [https://gist.github.com/jordisilvazup/1f0c7c8ebdd9320fb59a3f3e8f30d4db](https://gist.github.com/jordisilvazup/1f0c7c8ebdd9320fb59a3f3e8f30d4db)
+
+### Testando a lógica de aplicação de cupom de desconto
+O `Minas Mais Ecommerce` está adicionando na sua política de vendas, o benefício de Cupom de descontos. Os cupons são gerados aleatoriamente para incentivar as compras, então diariamente diversos usuários recebem cupons para comprar algum produto com uma porcetagem de desconto.
+
+Estes cupons possuem um tempo limite de validade, e só podem ser aplicados na compra caso aquele cupom seja do usuário contemplado e para o produto comtemplado, os desenvolvedores realizaram a implementação exposta abaixo, seu dever é testar de maneira unitária a fim de revelar bugs antes que a funcionalidade seja entregue a produção.
+
+```java
+public class Compra {
+    private Usuario dono;
+    private Produto produto;
+    private BigDecimal valor;
+
+    public Compra(Usuario dono, Produto produto, BigDecimal valor) {
+        this.dono = dono;
+        this.produto = produto;
+        this.valor = valor;
+    }
+}
+
+
+public class CupomDesconto {
+    private Usuario usuario;
+    private Produto produto;
+    private BigDecimal porcentagem;
+    private LocalDateTime validoAte;
+
+    public boolean isValido() {
+        return now().compareTo(validoAte) <= 0;
+    }
+
+    public boolean pertence(Usuario usuario) {
+        return this.usuario.equals(usuario);
+    }
+
+    public boolean pertence(Produto produto) {
+        return this.produto.equals(produto);
+    }
+
+    public BigDecimal getPorcentagem() {
+        return porcentagem;
+    }
+}
+
+public class Produto {
+    private String nome;
+    private BigDecimal preco;
+
+    public Compra comprar(CupomDesconto cupom, Usuario usuario) {
+        if (cupom.pertence(this) && cupom.pertence(usuario) && cupom.isValido()) {
+            BigDecimal valorDesconto = preco.multiply(cupom.getPorcentagem());
+
+            return new Compra(usuario, this, preco.subtract(valorDesconto));
+        }
+
+        return new Compra(usuario, this, preco);
+    }
+}
+
+public class Usuario {
+    private String nome;
+    private String email;
+}
+```
+
+Quais foram as técnicas que você utilizou para construir a suite de testes para funcionalidade que determina se um cupom é valido?
+
+`R:` Conditional coverage para os testes dos métodos da classe de cupom e Modefied codition/ Decision coverage para o método compra da classe Produto
+
+Quais foram as técnicas que você utilizou para construir a suite de testes para funcionalidade que determina se uma compra foi gerada com desconto de um cupom?
+
+`R:` MC/DC para identificar os pares de independência, porém, como é uma decisão simples usando somente AND é facilmente previsto testar com o caso de sucesso e um teste para condição que não seja TRUE
+
+Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar se um cupom é válido.
+
+`R:` [https://gist.github.com/adrianoavelinozup/75c5ef635cff5e1925a12952153e5327](https://gist.github.com/adrianoavelinozup/75c5ef635cff5e1925a12952153e5327)
+
+Resposta do especialista: [https://gist.github.com/jordisilvazup/9293a5ddffdb91fe76dc206f46a77a8d#file-cupomdescontotest-java](https://gist.github.com/jordisilvazup/9293a5ddffdb91fe76dc206f46a77a8d#file-cupomdescontotest-java)
+
+Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar se a compra foi gerada com o desconto do cupom.
+
+`R:` [https://gist.github.com/adrianoavelinozup/75c5ef635cff5e1925a12952153e5327#file-produtotest-java](https://gist.github.com/adrianoavelinozup/75c5ef635cff5e1925a12952153e5327#file-produtotest-java)
+
+|Teste  | A   | B   | C   | A `and` B `and` C |
+|:---:  |:---:|:---:|:---:|:---:              |
+|1      |V    |V    |V    |V                  |
+|2      |V    |V    |F    |F                  |
+|3      |v    |F    |V    |F                  |
+|4      |v    |F    |F    |F                  |
+|5      |F    |V    |V    |F                  |
+|6      |F    |V    |F    |F                  |
+|7      |F    |F    |V    |F                  |
+|8      |F    |F    |F    |F                  |
+
+Pares:    
+Teste A: {1, 5}    
+Teste B: {1, 3}    
+Teste C: {1, 2}    
+
+1. `Teste 1`: cupom de desconto pertence ao usuário, ao produto e está na validade
+2. `Teste 2`: cupom de desconto pertence ao usuário, ao produto e está vencido
+3. `Teste 3`: cupom de desconto pertence ao usuário, não pertence ao produto e está na validade
+4. `Teste 5`: cupom de desconto não pertence ao usuário, pertence ao produto e está na validade
