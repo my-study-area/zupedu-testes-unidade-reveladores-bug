@@ -390,3 +390,88 @@ Teste C: {1, 2}
 2. `Teste 2`: cupom de desconto pertence ao usuário, ao produto e está vencido
 3. `Teste 3`: cupom de desconto pertence ao usuário, não pertence ao produto e está na validade
 4. `Teste 5`: cupom de desconto não pertence ao usuário, pertence ao produto e está na validade
+
+### Testando a função de aprovar compra no Cartão de Crédito
+A Edubank é uma iniciativa de trazer crédito para professores autonomos EAD, o projeto já contém alta gama de investidores e até clientes para testar suas funcionalidades em modo `BETA`.
+
+No momento atual foi desenvolvido a funcionalidade aprovar um gasto de um professor, que é basicamente verificar se a soma dos gastos futuros com o valor do gasto é menor igual ao limite disponível no cartão. O Seu papel nesta atividade é aplicar seus conhecimentos em testes unitários a fim de encontrar o maior nível de bugs antes que a funcionalidade seja entregue em produção. O código a ser testado está descrito abaixo:
+```java
+public class Gasto {
+
+    private UUID id;
+    private BigDecimal valor;
+    private final LocalDateTime criadoEm = LocalDateTime.now();
+
+    public Gasto(BigDecimal valor) {
+        this.id = UUID.randomUUID();
+        this.valor = valor;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+}
+
+public class Cartao {
+
+    private String numero;
+    private String nomeTitular;
+    private String codigoSeguranca;
+    private String senha;
+    private BigDecimal limite;
+    private List<Fatura> faturas = new ArrayList<>();
+    private LocalDateTime validoAte;
+    private final LocalDateTime criadoEm = LocalDateTime.now();
+
+    public boolean isAprovado(Gasto gasto, String codigoSeguranca, String senha) {
+        BigDecimal somaDasFaturasFuturas = faturas.stream()
+                .filter(fatura -> fatura.getMesAno().compareTo(YearMonth.now()) >= 0)
+                .map(Fatura::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal gastosTotais = somaDasFaturasFuturas.add(gasto.getValor());
+
+        return gastosTotais.compareTo(limite) <= 0
+                && this.codigoSeguranca.equalsIgnoreCase(codigoSeguranca)
+                && this.senha.equalsIgnoreCase(senha);
+    }
+
+}
+
+public class Fatura {
+
+    private Cartao cartao;
+    private YearMonth mesAno;
+    private List<Gasto> gastos = new ArrayList<>();
+
+    public void adicionar(Gasto gasto) {
+        this.gastos.add(gasto);
+    }
+
+    public BigDecimal getValor() {
+        return gastos.stream()
+                .map(Gasto::getValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public YearMonth getMesAno() {
+        return mesAno;
+    }
+
+}
+```
+
+Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar se uma compra é aprovada no cartão.
+
+`R:` [https://gist.github.com/adrianoavelinozup/942bec10418657530bf43224355f46f4](https://gist.github.com/adrianoavelinozup/942bec10418657530bf43224355f46f4)
+
+Resposta do especialista: [https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7](https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7)
