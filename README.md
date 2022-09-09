@@ -475,3 +475,46 @@ Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar s
 `R:` [https://gist.github.com/adrianoavelinozup/942bec10418657530bf43224355f46f4](https://gist.github.com/adrianoavelinozup/942bec10418657530bf43224355f46f4)
 
 Resposta do especialista: [https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7](https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7)
+
+### Testando a funcao que verifica se um numero é Primo
+
+Os números primos são aqueles que apresentam apenas dois divisores: um e o próprio número. Eles fazem parte do conjunto dos números naturais.
+Por exemplo, 2 é um número primo, pois só é divisível por um e ele mesmo.
+
+Quando um número apresenta mais de dois divisores eles são chamados de números compostos e podem ser escritos como um produto de números primos.
+
+Dado a implementação descrita abaixo, sua missão é implementar testes de unidade com intuito de revelar a maior quantidade de
+bugs.
+
+```java
+public class NumeroPrimo {
+
+    public boolean primo(int numero) {
+        return primo(numero, 1, 0);
+    }
+
+    boolean primo(int numeroInicial, int numeroVariavel, int qtdDividido) {
+        if (numeroInicial == 0 || numeroInicial == -1 || numeroInicial == 1) {
+            return false;
+        }
+
+        if (numeroInicial % numeroVariavel == 0 && numeroInicial != numeroVariavel) {
+            return primo(numeroInicial, numeroVariavel + 1, qtdDividido + 1);
+
+        }
+
+        if (numeroInicial % numeroVariavel != 0 && numeroVariavel <= numeroInicial) {
+            return primo(numeroInicial, numeroVariavel + 1, qtdDividido);
+        }
+        return numeroInicial % numeroVariavel == 0 
+        && qtdDividido + 1 == 2 && numeroInicial == numeroVariavel;
+    }
+
+}
+```
+
+Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar se um número é primo
+
+`R:` [https://gist.github.com/adrianoavelinozup/18e94ed9c7f9b024462e33f1fef82690](https://gist.github.com/adrianoavelinozup/18e94ed9c7f9b024462e33f1fef82690)
+
+Resposta do especialista: [https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be](https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be)
