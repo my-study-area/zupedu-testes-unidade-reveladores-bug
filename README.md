@@ -518,3 +518,66 @@ Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar s
 `R:` [https://gist.github.com/adrianoavelinozup/18e94ed9c7f9b024462e33f1fef82690](https://gist.github.com/adrianoavelinozup/18e94ed9c7f9b024462e33f1fef82690)
 
 Resposta do especialista: [https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be](https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be)
+
+### Testando a funcao que realiza exponenciacao de forma recursiva
+A potenciação ou exponenciação é a operação matemática que representa a multiplicação de fatores iguais. Ou seja, usamos a potenciação quando um número é multiplicado por ele mesmo várias vezes.
+Para escrever um número na forma de potenciação usamos a seguinte notação: `a^n= a*a*a*a;`
+
+Uma implementação desta função esta abaixo.
+
+```java
+public class ExponenciacaoRecursiva {
+
+      public double exponenciar(int base, int expoente) {
+        if (expoente == 0) {
+            return 1;
+        }
+        if (expoente == -1) {
+            return 1.0 / base;
+        }
+
+        if (expoente == 1) {
+            return (double) base;
+        }
+
+        if (base == 1) {
+            return 1;
+        }
+
+        if (base == -1) {
+            return expoente % 2 == 0 ? 1 : -1;
+        }
+
+        return exponenciar((double) base, (double) expoente, 1);
+    }
+
+    double exponenciar(double base, double expoente, double resultado) {
+        if (expoente < 0) {
+            double baseInvertida = 1 / base;
+            double expoenteComSinalInvertido = expoente * -1;
+            return exponenciar(baseInvertida, expoenteComSinalInvertido - 1, resultado * baseInvertida * baseInvertida);
+        }
+
+        if (base < 0 && expoente % 2 == 0 && resultado == 1) {
+            double baseComSinalInvertido = base * -1;
+            return exponenciar(baseComSinalInvertido, expoente - 1, resultado * baseComSinalInvertido * baseComSinalInvertido);
+        }
+
+        if (resultado == 1) {
+            return exponenciar(base, expoente - 1, resultado * base * base);
+        }
+
+        if (expoente == 1) {
+            return resultado;
+        }
+
+        return exponenciar(base, expoente - 1, resultado * base);
+    }
+
+}
+```
+Cole aqui o link do Gist desenvolvido relativo aos testes gerados para funcionalidade realiza a exponenciação de dois números de forma recursiva?
+
+`R:` [https://gist.github.com/adrianoavelinozup/32de2c103052f1b226e8b117fe21bdf3](https://gist.github.com/adrianoavelinozup/32de2c103052f1b226e8b117fe21bdf3)
+
+Resposta do especialista: [https://gist.github.com/jordisilvazup/3eb23420bbc740a2bc23dd881396ba8c](https://gist.github.com/jordisilvazup/3eb23420bbc740a2bc23dd881396ba8c)
