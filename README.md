@@ -1,9 +1,14 @@
 # zupedu-testes-unidade-reveladores-bug
+![GitHub top language](https://img.shields.io/github/languages/top/my-study-area/zupedu-testes-unidade-reveladores-bug)
+[![Made by](https://img.shields.io/badge/made%20by-adriano%20avelino-gree)](https://github.com/adrianoavelino)
+![Repository size](https://img.shields.io/github/repo-size/my-study-area/zupedu-testes-unidade-reveladores-bug)
+[![GitHub last commit](https://img.shields.io/github/last-commit/my-study-area/zupedu-testes-unidade-reveladores-bug)](https://github.com/my-study-area/zupedu-testes-unidade-reveladores-bug/commits/main)
+
 Testes de Unidade Reveladores de Bugs
 
-## Aplicando Testes de Unidade Reveladores de Bugs
-### Teorias necessarias
-1 - [Aprendendo sobre Specification Test](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/specification-test.md)
+# Aplicando Testes de Unidade Reveladores de Bugs
+## Teorias necessarias
+### 1 - [Aprendendo sobre Specification Test](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/specification-test.md)
 
 Pensar em possíveis casos de testes baseados na especificação
 - Identificação dos parametros de entrada. _Ex: identificador de aluno_
@@ -24,7 +29,7 @@ fonte: [Técnica de Teste — Particionamento de Equivalência](https://medium.c
 [Vídeo no youtube: O que é partição de equivalência: o guia definitivo
 ](https://www.youtube.com/watch?v=-IdzE1GoC-g&ab_channel=JuliodeLima)
 
-2 - Aprendendo sobre Boundary Test
+### 2 - [Aprendendo sobre Boundary Test](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/boundary-test.md)
 - visa encontrar os limites das classes de entradas. _Por - exemplo, na maioridade, os valores que são igual ou maiores que de 18, como: 18, 19, 25, 34 e 76 e sem maioridade, os valores que por natureza são menores que 18, como: 1, 2, 3, 16 e 17_
 - para encontrar os limites utilizams alguns conceitos como: `point, offpoint, inpoints e offpoints`
   - `point`: valor exato do limite. Ex: 18 anos
@@ -33,7 +38,7 @@ fonte: [Técnica de Teste — Particionamento de Equivalência](https://medium.c
   - `offpoints`: são todos os valores inválidos. Ex: 17, 16 ... 2 anos e etc 
 
 
-3 - Aprendendo sobre Structural Test
+### 3 - [Aprendendo sobre Structural Test](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/structural-test.md)
 - Structural Test ou Testes Estruturais são testes construídos guiados pelo código-fonte
 - Tem como responsabilidade garantir um critério de cobertura
 
@@ -476,7 +481,7 @@ Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar s
 
 Resposta do especialista: [https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7](https://gist.github.com/jordisilvazup/1ad98b3479bb0f9e8513c1431b19f7c7)
 
-### Testando a funcao que verifica se um numero é Primo
+### Testando a funçãoo que verifica se um número é Primo
 
 Os números primos são aqueles que apresentam apenas dois divisores: um e o próprio número. Eles fazem parte do conjunto dos números naturais.
 Por exemplo, 2 é um número primo, pois só é divisível por um e ele mesmo.
@@ -519,7 +524,7 @@ Cole aqui o link do Gist desenvolvido relativo aos testes gerados para validar s
 
 Resposta do especialista: [https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be](https://gist.github.com/jordisilvazup/e1b4e61c233cb5922ad60ed7d18208be)
 
-### Testando a funcao que realiza exponenciacao de forma recursiva
+### Testando a função que realiza exponenciação de forma recursiva
 A potenciação ou exponenciação é a operação matemática que representa a multiplicação de fatores iguais. Ou seja, usamos a potenciação quando um número é multiplicado por ele mesmo várias vezes.
 Para escrever um número na forma de potenciação usamos a seguinte notação: `a^n= a*a*a*a;`
 
