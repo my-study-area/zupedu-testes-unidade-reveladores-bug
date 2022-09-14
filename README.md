@@ -134,7 +134,7 @@ void test2() {
 - [ST1x_2018_Week_3_03_Branch_coverage-video
 ](https://www.youtube.com/watch?v=u0UJn1FseKY&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
 
-### Cobertura condicional ((Basic) condition coverage)
+#### Cobertura condicional ((Basic) condition coverage)
 - Visa a cobertura de código baseada nas condicionais
 - Alguns casos onde as condicionais fazem mais de uma verificação é necessário verificar as demais ramificações (filiais ou caminhos)
 
@@ -225,7 +225,7 @@ class CrescenteTest {
 - [ST1x_2018_Week_3_04_Condition_coverage-video
 ](https://www.youtube.com/watch?v=6FlpIG7h8TQ&ab_channel=ST1xAutomatedSoftwareTestingPracticalSkills)
 
-### Cobertura de Caminho (Path Coverage)
+#### Cobertura de Caminho (Path Coverage)
 
 - Visa criar testes apartir da combinação completa das condições de uma decisão
 - Cada combinação é um caminho que deve ser exercicitado por teste
@@ -238,7 +238,7 @@ total de camimhos = 6
 cobertura de caminhos ->  (2/6) * 100 =  33,33%
 ```
 
-### MC/DC - Condição Modificada/Cobertura de decisão (Modified Condition/Decision Coverage)
+#### MC/DC - Condição Modificada/Cobertura de decisão (Modified Condition/Decision Coverage)
 
 - [MCDC](https://github.com/zup-academy/materiais-publicos-treinamentos/blob/main/testes-de-unidade-reveladores-de-bugs/structural-test.md#mcdc---condi%C3%A7%C3%A3o-modificadacobertura-de-decis%C3%A3o-modified-conditiondecision-coverage)
 
